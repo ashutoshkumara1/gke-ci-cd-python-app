@@ -13,7 +13,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.RUN_PROJECT }}
   GKE_CLUSTER: kubernetes-cluster    # Add your cluster name here.
-  GKE_ZONE: asia-northeast1-a   # Add your cluster zone here.
+  GKE_ZONE: us-central1-c   # Add your cluster zone here.
   DEPLOYMENT_NAME: python-app # Add your deployment name here.
   IMAGE: python-app
 
