@@ -11,7 +11,7 @@ on:
       - main
 
 env:
-  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  PROJECT_ID: ${{ secrets.RUN_PROJECT }}
   GKE_CLUSTER: kubernetes-cluster    # Add your cluster name here.
   GKE_ZONE: asia-northeast1-a   # Add your cluster zone here.
   DEPLOYMENT_NAME: python-app # Add your deployment name here.
@@ -30,8 +30,8 @@ jobs:
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
       with:
-        service_account_key: ${{ secrets.GKE_SA_KEY }}
-        project_id: ${{ secrets.GKE_PROJECT }}
+        service_account_key: ${{ secrets.RUN_SA_KEY }}
+        project_id: ${{ secrets.RUN_PROJECT }}
 
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
@@ -43,7 +43,7 @@ jobs:
       with:
         cluster_name: ${{ env.GKE_CLUSTER }}
         location: ${{ env.GKE_ZONE }}
-        credentials: ${{ secrets.GKE_SA_KEY }}
+        credentials: ${{ secrets.RUN_SA_KEY }}
 
     # Build the Docker image
     - name: Build
