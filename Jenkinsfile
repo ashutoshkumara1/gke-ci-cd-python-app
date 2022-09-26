@@ -19,7 +19,7 @@ pipeline {
 		    steps {
 			    sh 'whoami'
 			    script {
-				    myimage = docker.build("ashutosha1/GCP-Project:${env.BUILD_ID}")
+				    myimage = docker.build("ashutosha1/gcp-Project:${env.BUILD_ID}")
 			    }
 		    }
 	    }
