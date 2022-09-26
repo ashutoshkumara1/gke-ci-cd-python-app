@@ -17,7 +17,7 @@ spec:
   spec:
    containers:
    - name: myapp
-     image: ashutosha1/GCP-Project:tagversion
+     image: ashutosha1/gcp-project:tagversion
      ports:
      - containerPort: 8080
 
