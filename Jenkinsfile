@@ -58,13 +58,6 @@ pipeline {
 				echo "Start deployment of deployment.yaml"
 				step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
 			    echo "Deployment Finished ..."
-			    script {
-                    def stopcontainer = "docker stop ${JOB_NAME}"
-                    def delcontName = "docker rm ${JOB_NAME}"
-                    def delimages = 'docker image prune -a --force'
-                    def drun = "docker run -d --name ${JOB_NAME} -p 5000:5000 ${myimage}"
-                    println "${drun}"
-                    }
 		    }
 	    }
     }
