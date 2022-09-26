@@ -1,8 +1,7 @@
-#Dockerfile
-FROM python:3.7-slim
-RUN pip install flask
-WORKDIR /app
-COPY app.py /app/app.py
-ENTRYPOINT ["python"]
-CMD ["/app/app.py"]
+#Dockerfile, image, container
 
+FROM python:3.8-slim-buster
+ADD . /python-flask
+WORKDIR /python-flask
+RUN pip install -r requirements.txt
+CMD [ "python", "./myapp.py" ]
