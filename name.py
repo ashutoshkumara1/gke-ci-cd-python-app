@@ -8,7 +8,7 @@ def index():
 def hello():
     name = request.form['name']
     return """
-    <h1>Hellow!!<h1>
+    <h1>Hello!!<h1>
     <h1>{}<h1>
     <h1>Welcome To Google Cloud!!<h1>
     """.format(name)
