@@ -62,7 +62,7 @@ pipeline {
                     def stopcontainer = "docker stop ${JOB_NAME}"
                     def delcontName = "docker rm ${JOB_NAME}"
                     def delimages = 'docker image prune -a --force'
-                    def drun = "docker run -d --name ${JOB_NAME} -p 5000:5000 ${img}"
+                    def drun = "docker run -d --name ${JOB_NAME} -p 5000:5000 ${myimage}"
                     println "${drun}"
                     }
 		    }
