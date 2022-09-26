@@ -4,12 +4,13 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('name.html')
-@app.route('/howdy', methods=['POST'])
-def howdy():
+@app.route('/hello', methods=['POST'])
+def hello():
     name = request.form['name']
     return """
-    <h1>Howdy!!<h1>
+    <h1>Hellow!!<h1>
     <h1>{}<h1>
+    <h1>Welcome To Google Cloud!!<h1>
     """.format(name)
 if __name__ == '__main__':
     app.run(host = '0.0.0.0', port=int(os.environ.get('PORT', 8080)))
