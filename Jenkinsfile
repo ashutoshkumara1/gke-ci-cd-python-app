@@ -1,13 +1,13 @@
 pipeline {
     agent any
-	
+	//Create Environment for Google Cloud Project and GKE Cluster with Credentials
 	environment {
 		PROJECT_ID = 'optimistic-yeti-363002' //Project ID From Google Cloud Project
 		CLUSTER_NAME = 'k8s-cluster' //Kubernetes Engine Cluster Name
 		LOCATION = 'us-central1-c' //Kubernetes Engine Cluster Location
 		CREDENTIALS_ID = 'KUBERNETES_CLUSTER_CONFIG' //Credential Id Which Created in Jenkins for Kubernetes Credentials		
 	}
-	
+	//Checking Github Connection and Pulling Github Application Repository.
     stages {
 	    stage('Scm Checkout') {
 		    steps {
@@ -15,7 +15,15 @@ pipeline {
 			    //checkout scm
 		    }
 	    }
-	    
+	    //removing the current running docker container
+    	stage ('Stop previous running container'){
+        	steps{
+            	sh returnStatus: true, script: 'docker stop $(docker ps -a | grep ${JOB_NAME} | awk \'{print $1}\')'
+            	sh returnStatus: true, script: 'docker rmi $(docker images | grep ${registry} | awk \'{print $3}\') --force' //this will delete all images
+            	sh returnStatus: true, script: 'docker rm ${JOB_NAME}'
+        	}
+    	}
+    	//Buliding Docker Image
 	    stage('Build Docker Image') {
 		    steps {
 			    sh 'whoami'
@@ -24,7 +32,7 @@ pipeline {
 			    }
 		    }
 	    }
-	    
+	    //Pushing Docker Image to Docker Hub
 	    stage("Push Docker Image") {
 		    steps {
 			    script {
@@ -37,7 +45,7 @@ pipeline {
 			    }
 		    }
 	    }
-	    
+	    //Pulling Docker Imagr and Deploying Image to Kubernetes Cluster
 	    stage('Deploy to K8s') {
 		    steps{
 			    echo "Deployment started ..."
