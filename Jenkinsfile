@@ -5,7 +5,7 @@ pipeline {
 		PROJECT_ID = 'optimistic-yeti-363002' //Project ID From Google Cloud Project
 		CLUSTER_NAME = 'k8s-cluster' //Kubernetes Engine Cluster Name
 		LOCATION = 'us-central1-c' //Kubernetes Engine Cluster Location
-		CREDENTIAL_ID = 'kubernetes' //Credential Id Which Created in Jenkins for Kubernetes Credentials		
+		CREDENTIAL_ID = 'KUBERNETES_CLUSTER_CONFIG' //Credential Id Which Created in Jenkins for Kubernetes Credentials		
 	}
 	
     stages {
