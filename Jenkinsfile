@@ -26,6 +26,15 @@ pipeline {
         	}
     	}
 	    
+	    stage('Build Docker Image') {
+		    steps {
+			    sh 'whoami'
+			    script {
+				    myimage = docker.build("ashutosha1/gcp-Project:${env.BUILD_ID}")
+			    }
+		    }
+	    }
+	    
 	    stage("Push Docker Image") {
 		    steps {
 			    script {
