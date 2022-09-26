@@ -5,13 +5,14 @@ pipeline {
 		PROJECT_ID = 'optimistic-yeti-363002' //Project ID From Google Cloud Project
 		CLUSTER_NAME = 'k8s-cluster' //Kubernetes Engine Cluster Name
 		LOCATION = 'us-central1-c' //Kubernetes Engine Cluster Location
-		CREDENTIAL_ID = 'kubernetes' //Credential Id Which Created in Jenkins for Kubernetes Credentials		
+		CREDENTIALS_ID = 'KUBERNETES_CLUSTER_CONFIG' //Credential Id Which Created in Jenkins for Kubernetes Credentials		
 	}
 	
     stages {
 	    stage('Scm Checkout') {
 		    steps {
-			    checkout scm
+		    	git branch: 'main', credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/ashutoshkumara1/gke-ci-cd-python-app.git'
+			    //checkout scm
 		    }
 	    }
 	    
@@ -44,8 +45,10 @@ pipeline {
 			    sh 'pwd'
 			    sh "sed -i 's/tagversion/${env.BUILD_ID}/g' serviceLB.yaml"
 				sh "sed -i 's/tagversion/${env.BUILD_ID}/g' deployment.yaml"
-				sh 'kubectl apply -f deployment.yaml'
-				sh 'kubectl apply -f serviceLB.yaml'
+			    echo "Start deployment of serviceLB.yaml"
+			    step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'serviceLB.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+				echo "Start deployment of deployment.yaml"
+				step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
 			    echo "Deployment Finished ..."
 		    }
 	    }
